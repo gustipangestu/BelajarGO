@@ -42,11 +42,26 @@ func volumeTabung(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func interfaceBangun2D(w http.ResponseWriter, r *http.Request) {
+	dataKotak := Bangun2D.Kotak{
+		Sisi: 10,
+	}
+	luasKotak := Bangun2D.Interfacee(dataKotak)
+
+	str, err := json.Marshal(luasKotak)
+	if err != nil {
+		fmt.Print(err)
+	} else {
+		io.WriteString(w, string(str))
+	}
+}
+
 func main() {
 	var mux = http.NewServeMux()
 
 	mux.HandleFunc("/luasPersegi", luasPersegi)
 	mux.HandleFunc("/volumeTabung", volumeTabung)
+	mux.HandleFunc("/interfaceluaspersegi", interfaceBangun2D)
 
 	http.ListenAndServe(":5050", mux)
 }
